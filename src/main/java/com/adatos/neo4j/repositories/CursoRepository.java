@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Service;
 
 @Service
-@RepositoryRestResource(collectionResourceRel = "movies", path = "movies")
+@RepositoryRestResource(collectionResourceRel = "clases", path = "clases")
 public interface CursoRepository extends Neo4jRepository<Curso, Long> {
 
 }

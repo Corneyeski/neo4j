@@ -3,6 +3,7 @@ package com.adatos.neo4j.controller;
 import com.adatos.neo4j.domain.Curso;
 import com.adatos.neo4j.repositories.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,13 +21,15 @@ public class TestController {
     }
 
     @RequestMapping("/altaTest")
-    public void altaTest(){
+    public void altaTest(@RequestBody Curso curso){
 
-        Curso curso = new Curso();
-        curso.setNombre("CursoTest");
+        /*Curso curso = new Curso();
+        curso.setNombre("CursoTest");*/
 
-        cursoRepository.save(curso);
+        System.out.println(cursoRepository.save(curso).getId());
 
-        Curso cursos = (Curso) cursoRepository.findAll();
+        Iterable<Curso> cursos = cursoRepository.findAll();
+
+        cursos.forEach(c -> System.out.println(c.getNombre()));
     }
 }
