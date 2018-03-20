@@ -8,7 +8,7 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Curso {
 
     @GraphId
@@ -19,7 +19,11 @@ public class Curso {
     @Relationship(type = "ENSENA", direction = Relationship.INCOMING)
     private List<Profesor> profesores;
 
-    public Curso() {}
+    @Relationship(type = "APUNTADO", direction = Relationship.INCOMING)
+    private List<Alumno> alumnos;
+
+    public Curso() {
+    }
 
     public Long getId() {
         return id;
@@ -43,5 +47,13 @@ public class Curso {
 
     public void setProfesores(List<Profesor> profesores) {
         this.profesores = profesores;
+    }
+
+    public List<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public void setAlumnos(List<Alumno> alumnos) {
+        this.alumnos = alumnos;
     }
 }
