@@ -3,9 +3,11 @@ package com.adatos.neo4j.controller;
 import com.adatos.neo4j.domain.Alumno;
 import com.adatos.neo4j.domain.Curso;
 import com.adatos.neo4j.domain.Profesor;
+import com.adatos.neo4j.domain.RecieveData;
 import com.adatos.neo4j.repositories.AlumnoRepository;
 import com.adatos.neo4j.repositories.CursoRepository;
 import com.adatos.neo4j.repositories.ProfesorRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +34,10 @@ public class TestController {
     }
 
     @RequestMapping("/altaTest")
-    public void altaTest(@RequestBody Curso curso){
+    public void altaTest(){
 
-        /*Curso curso = new Curso();
-        curso.setNombre("CursoTest");*/
+        Curso curso = new Curso();
+        curso.setNombre("CursoTest");
 
         System.out.println(cursoRepository.save(curso).getId());
 
@@ -45,7 +47,10 @@ public class TestController {
     }
 
     @RequestMapping(value = "/altaprofesor" , method = RequestMethod.PUT)
-    public Long altaProfessor(@RequestBody Profesor profesor){
+    public Long altaProfessor(@RequestBody RecieveData recieveData){
+
+        Profesor profesor = new Profesor();
+        BeanUtils.copyProperties(recieveData, profesor);
 
         return profesorRepository.save(profesor).getId();
 
@@ -61,5 +66,20 @@ public class TestController {
     public Long altaAlumno(@RequestBody Alumno alumno){
 
         return alumnoRepository.save(alumno).getId();
+    }
+
+    @RequestMapping(value = "/altaalumno" , method = RequestMethod.POST)
+    public boolean setCursoToProfesor(@RequestBody RecieveData recieveData){
+
+        if (recieveData.getCurso() != null &&
+                cursoRepository.findOne(recieveData.getCurso()) != null)
+            return false;
+
+        Profesor profesor = new Profesor();
+        BeanUtils.copyProperties(recieveData, profesor);
+
+        profesorRepository.save(profesor);
+
+        return true;
     }
 }

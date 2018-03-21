@@ -10,8 +10,8 @@ public class Alumno {
 
     @GraphId
     private Long id;
-    private String name;
-    private int age;
+    private String nombre;
+    private int edad;
 
     @Relationship(type = "APUNTADO")
     private Curso curso;
@@ -24,20 +24,20 @@ public class Alumno {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getAge() {
-        return age;
+    public int getEdad() {
+        return edad;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
     public Curso getCurso() {
