@@ -4,8 +4,10 @@ import com.adatos.neo4j.domain.Alumno;
 import com.adatos.neo4j.domain.Curso;
 import com.adatos.neo4j.domain.Profesor;
 import com.adatos.neo4j.domain.RecieveData;
+import com.adatos.neo4j.domain.relationships.HaceClase;
 import com.adatos.neo4j.repositories.AlumnoRepository;
 import com.adatos.neo4j.repositories.CursoRepository;
+import com.adatos.neo4j.repositories.HaceClaseRepository;
 import com.adatos.neo4j.repositories.ProfesorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class TestController {
 
     @Autowired
     AlumnoRepository alumnoRepository;
+
+    @Autowired
+    HaceClaseRepository haceClaseRepository;
 
     @RequestMapping("/test")
     public String test(){
@@ -68,18 +73,22 @@ public class TestController {
         return alumnoRepository.save(alumno).getId();
     }
 
-    @RequestMapping(value = "/altaalumno" , method = RequestMethod.POST)
+    @RequestMapping(value = "/setcursoprofesor" , method = RequestMethod.POST)
     public boolean setCursoToProfesor(@RequestBody RecieveData recieveData){
 
         if (recieveData.getCurso() != null &&
-                cursoRepository.findOne(recieveData.getCurso()) != null)
+                cursoRepository.findOne(recieveData.getCurso()) != null){
+
+            Curso curso = cursoRepository.findOne(recieveData.getCurso());
+            Profesor profesor = new Profesor();
+            BeanUtils.copyProperties(recieveData, profesor);
+
+            profesorRepository.save(profesor);
+
+            haceClaseRepository.save(new HaceClase(profesor, curso, "java"));
+
+            return true;
+        }
             return false;
-
-        Profesor profesor = new Profesor();
-        BeanUtils.copyProperties(recieveData, profesor);
-
-        profesorRepository.save(profesor);
-
-        return true;
     }
 }
