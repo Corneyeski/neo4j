@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-//@Controller("/c")
+//@RestController("/")
 public class CursoController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class CursoController {
         return cursoRepository.save(curso).getId();
     }
 
-    @RequestMapping(value = "/find/{id}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/curso/{id}" , method = RequestMethod.GET)
     public Curso findCursoById(@PathVariable long id){
 
         return cursoRepository.findOne(id);

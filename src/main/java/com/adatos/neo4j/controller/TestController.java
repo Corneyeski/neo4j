@@ -11,10 +11,7 @@ import com.adatos.neo4j.repositories.HaceClaseRepository;
 import com.adatos.neo4j.repositories.ProfesorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -90,5 +87,17 @@ public class TestController {
             return true;
         }
             return false;
+    }
+
+    @RequestMapping(value = "/findprofesor/{id}" , method = RequestMethod.GET)
+    public Profesor findProfesorById(@PathVariable long id){
+
+        return profesorRepository.findOne(id);
+    }
+
+    @RequestMapping(value = "/findcurso/{id}" , method = RequestMethod.GET)
+    public Curso findCursoById(@PathVariable long id){
+
+        return cursoRepository.findOne(id);
     }
 }
