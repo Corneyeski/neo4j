@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.Relationship;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+import java.util.Set;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Alumno {
 
     @GraphId
@@ -14,7 +16,7 @@ public class Alumno {
     private int edad;
 
     @Relationship(type = "APUNTADO")
-    private Curso curso;
+    private Set<Curso> curso;
 
     public Long getId() {
         return id;
@@ -40,11 +42,7 @@ public class Alumno {
         this.edad = edad;
     }
 
-    public Curso getCurso() {
-        return curso;
-    }
+    public Set<Curso> getCurso() { return curso; }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
+    public void setCurso(Set<Curso> curso) { this.curso = curso; }
 }
