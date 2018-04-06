@@ -158,4 +158,28 @@ public class TestController {
 
         return true;
     }
+
+    @RequestMapping(value = "/update/profesor", method = RequestMethod.POST)
+    public Profesor updateProfesorById(@RequestBody Profesor profesor) {
+
+        if(profesor.getId() != null)
+            return profesorRepository.save(profesor);
+        else return new Profesor();
+    }
+
+    @RequestMapping(value = "/update/curso", method = RequestMethod.POST)
+    public Curso updateCursoById(@RequestBody Curso curso) {
+
+        if(curso.getId() != null)
+            return cursoRepository.save(curso);
+        else return new Curso();
+    }
+
+    @RequestMapping(value = "/update/alumno", method = RequestMethod.POST)
+    public Alumno updateAlumnoById(@RequestBody Alumno alumno) {
+
+        if(alumno.getId() != null)
+            return alumnoRepository.save(alumno);
+        else return new Alumno();
+    }
 }
